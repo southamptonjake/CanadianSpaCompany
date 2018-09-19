@@ -33,6 +33,7 @@ public class CreateOrder {
                 	String fullName = orderDetails[14];
                 	String firstName = fullName.split(" ")[1];
                 	String lastName = fullName.split(" ")[2];
+                	String siteCode = orderDetails[13];	
                 	Customer c = new Customer(orderDetails[21],orderDetails[19],orderDetails[20],firstName,lastName,"",orderDetails[15],"",orderDetails[16],orderDetails[17],"",orderDetails[18]);
                 	ArrayList<String> sku = new ArrayList<String>();
                 	ArrayList<String> quanity = new ArrayList<String>();
@@ -45,7 +46,7 @@ public class CreateOrder {
                 	price.add(orderDetails[34]);
                 	tax.add("0.2");
                 	
-                	listOfOrders.add(new Order(quanity,sku,price,tax,orderNumber,salesOrderNum,c));
+                	listOfOrders.add(new Order(quanity,sku,price,tax,orderNumber,salesOrderNum,c,siteCode));
                 	
                 }
                 // if continuing order

@@ -6,6 +6,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 
 public class Order {
 
@@ -14,10 +18,11 @@ public class Order {
 	String orderNumber;
 	Customer customer;
 	String salesOrderNumber;
+	String siteCode;
 
 
 	public Order(ArrayList<String> quanity, ArrayList<String> sku, ArrayList<String> price,
-			ArrayList<String> tax, String orderNumber, String salesOrderNumber, Customer customer) {
+			ArrayList<String> tax, String orderNumber, String salesOrderNumber, Customer customer, String siteCode) {
 		super();
 		this.quanity = quanity;
 		this.sku = sku;
@@ -26,6 +31,7 @@ public class Order {
 		this.orderNumber = orderNumber;
 		this.customer = customer;
 		this.salesOrderNumber = salesOrderNumber;
+		this.siteCode = siteCode;
 	}
 	public void upload()
 	{
@@ -91,7 +97,7 @@ public class Order {
 				lineItemAttributes +
 				"        ],\r\n" +
 				"\"customer_note_attributes\": {\r\n" +
-				"        \"text\": \""+orderNumber + " " + salesOrderNumber + "\"\r\n" + 
+				"        \"text\": \""+orderNumber + " " + salesOrderNumber + " " + siteCode + "\"\r\n" + 
 				"      }\r\n" + 
 				"    }\r\n" + 
 				"}");
@@ -107,16 +113,29 @@ public class Order {
 	public String convertToSellableID(String sku)
 	{
 
+
 		Client client = ClientBuilder.newClient();
-		Response response = client.target("https://api.veeqo.com/products?query=" + sku)
+		Response response;
+
+		response = client.target("https://api.veeqo.com/products?query=" + sku)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("x-api-key", APIKEY)
 				.get();
 		String body = response.readEntity(String.class);
-		body = body.substring(body.indexOf("\"sku_code\":\"" + sku + "\""));
-		String sellableID = body.substring(body.indexOf("sellable_id") + 13,body.indexOf(",",body.indexOf(("sellable_id"))));
-		System.out.println("sellable id " + sellableID);
-		return sellableID;
+		JsonArray jsonArray = new JsonArray();
+		JsonParser jparse = new JsonParser();
+		jsonArray = jparse.parse(body).getAsJsonArray();
+		for(JsonElement j : jsonArray)
+		{
+			JsonArray sellableArray = j.getAsJsonObject().get("sellables").getAsJsonArray();
+			for(JsonElement e : sellableArray)
+			{
+				if(e.getAsJsonObject().get("sku_code").getAsString().equals(sku)) {
+					return e.getAsJsonObject().get("id").getAsString();
+				}
+			}
+		}
+		return sku;
 
 	}
 

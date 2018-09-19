@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -141,9 +143,26 @@ public class Order {
 
 		return shippingID;
 	}
+	
+	public static void main(String[] args) {
+		
+		String APIKEY = "***REMOVED***";
+		String sku = "KA-10020";
+		Client client = ClientBuilder.newClient();
+		Response response = client.target("https://api.veeqo.com/products?query=" + sku)
+				.request(MediaType.APPLICATION_JSON_TYPE)
+				.header("x-api-key", APIKEY)
+				.get();
+		String body = response.readEntity(String.class);
+		body = body.substring(body.indexOf("\"sku_code\":\"" + sku + "\""));
+		String sellableID = body.substring(body.indexOf("sellable_id") + 13,body.indexOf(",",body.indexOf(("sellable_id"))));
+		String sellableTitle = body.substring(body.indexOf("sellable_title") + 13,body.indexOf(",",body.indexOf(("sellable_title"))));
+		System.out.println(sellableID);
+		System.out.println(sellableTitle);
+	
 
+		
 
-
-
+	}
 
 }
