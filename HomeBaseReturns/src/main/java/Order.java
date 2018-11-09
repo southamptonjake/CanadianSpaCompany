@@ -51,7 +51,7 @@ public class Order {
 
 
 	public static void main(String[] args) {
-		String path = "\\\\ANIQA\\CCentre\\Trays\\In";
+		String path = "\\\\aniqapc\\CCentre\\Trays\\In";
 		//String path = "C:\\Users\\JakeL\\Desktop\\In";
 		File Folder = new File(path);
 		File files[];

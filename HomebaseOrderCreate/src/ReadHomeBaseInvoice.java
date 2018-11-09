@@ -31,7 +31,7 @@ public class ReadHomeBaseInvoice {
 
 		//change to User wheni export
 		//String path = "C:\\Users\\JakeL\\Desktop\\Orders";
-		String path = "\\\\ANIQA\\CCentre\\Trays\\In";
+		String path = "\\\\aniqapc\\CCentre\\Trays\\In";
 		ArrayList<StatusReport> reportsToAdd = new ArrayList<StatusReport>();
 		File Folder = new File(path);
 		File files[];
