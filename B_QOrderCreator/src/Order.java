@@ -6,6 +6,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -19,10 +20,12 @@ public class Order {
 	Customer customer;
 	String salesOrderNumber;
 	String siteCode;
+	String buyerName;
+	String poType;
 
 
 	public Order(ArrayList<String> quanity, ArrayList<String> sku, ArrayList<String> price,
-			ArrayList<String> tax, String orderNumber, String salesOrderNumber, Customer customer, String siteCode) {
+			ArrayList<String> tax, String orderNumber, String salesOrderNumber, Customer customer, String siteCode, String buyerName, String poType) {
 		super();
 		this.quanity = quanity;
 		this.sku = sku;
@@ -32,22 +35,61 @@ public class Order {
 		this.customer = customer;
 		this.salesOrderNumber = salesOrderNumber;
 		this.siteCode = siteCode;
+		this.buyerName = buyerName;
+		this.poType = poType;
 	}
 	public void upload()
 	{
-		uploadOrder("15223925");
+		System.out.println(buyerName);
+		uploadOrder(findCustomer());
+	}
+	
+	public String findCustomer()
+	{
+		if(poType.equals("DC Manual PO"))
+		{
+			return "23678611";
+		}
+		else
+		{
+			if(buyerName.equals("B&Q plc"))
+			{
+				return "23657440";
+			}
+		}
+		return "123";
+		
+	}
+	
+	public class CustomerHolder
+	{
+		Customer customer;
+
+		public CustomerHolder(Customer customer) {
+			super();
+			this.customer = customer;
+		}
+		
+		
 	}
 	public String uploadCustomer()
 	{
 
+		
 		Client client = ClientBuilder.newClient();
-		Entity payload = Entity.json("{  \"customer\": { \"email\": \"diy.com\",    \"phone\": \""+customer.phone+"\",    \"mobile\": \""+customer.mobile+"\",    \"billing_address_attributes\": {      \"first_name\": \"B&Q\",      \"last_name\": \"\",      \"company\": \"B&Q plc\",      \"address1\": \"B&Q House\",      \"address2\": \"Chestnut Avenue\",      \"city\": \"Southampton\",      \"country\": \"UK\",      \"zip\": \"SO53 3LE\"    }  }}");	
+		Gson gson = new Gson();
+		String json = gson.toJson(new CustomerHolder(customer));
+		Entity payload = Entity.json(json);
+		System.out.println(payload.getEntity().toString());
+		
 		Response response = client.target("https://api.veeqo.com/customers")
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("x-api-key", APIKEY)
 				.post(payload);
 
 		String body = response.readEntity(String.class);
+		
+		System.out.println(body);
 
 		String customerID = body.substring(body.indexOf("id") + 4,body.indexOf(","));
 		System.out.println("customer id " + customerID);
@@ -79,20 +121,8 @@ public class Order {
 				"{\r\n" + 
 				"    \"order\": {\r\n" + 
 				"        \"channel_id\": 48307,\r\n" + 
-				"        \"customer_id\":"+ customerID + ",\r\n" + 
-				"        \"deliver_to_attributes\": {\r\n" + 
-				"            \"address1\": \""+customer.addr1+"\",\r\n" + 	
-				"            \"address2\": \""+customer.addr2+"\",\r\n" + 
-				"            \"city\": \""+customer.city+"\",\r\n" + 
-				"            \"company\": \""+customer.company+"\",\r\n" + 
-				"            \"country\": \""+customer.country+"\",\r\n" + 
-				"            \"customer_id\": 7014549,\r\n" + 
-				"            \"first_name\": \""+customer.firstName+"\",\r\n" + 
-				"            \"last_name\": \""+customer.lastName+"\",\r\n" + 
-				"            \"phone\": \""+customer.phone+"\",\r\n" + 
-				"            \"state\": \""+customer.state+"\",\r\n" + 
-				"            \"zip\": \""+customer.zip+"\"\r\n" + 
-				"        },\r\n" + 
+				"        \"customer_id\": "+ customerID + ",\r\n" + 
+				"        \"deliver_to_id\": "+ uploadCustomer() + ",\r\n" + 
 				"        \"line_items_attributes\": [\r\n" + 
 				lineItemAttributes +
 				"        ],\r\n" +
@@ -107,7 +137,7 @@ public class Order {
 				.post(payload);
 
 		System.out.println(payload.getEntity().toString());
-		//System.out.println(response.readEntity(String.class));
+		System.out.println(response.readEntity(String.class));
 	}
 
 	public String convertToSellableID(String sku)

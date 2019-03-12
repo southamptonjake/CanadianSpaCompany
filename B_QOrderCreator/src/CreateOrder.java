@@ -18,6 +18,8 @@ public class CreateOrder {
         String line = "";
         String cvsSplitBy = ",";
 
+        
+        
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
         	String cOrderNum = "firstOrder";
         	br.readLine();
@@ -28,7 +30,11 @@ public class CreateOrder {
                 //if new order
                 if(!cOrderNum.equals(orderDetails[0]))
                 {
+                	
+                	
                 	cOrderNum = orderDetails[0];
+                	String buyerName = orderDetails[8];
+                	String poType = orderDetails[2];
                 	String salesOrderNum = orderDetails[23];
                 	String fullName = orderDetails[14];
                 	String firstName = fullName.split(" ")[1];
@@ -46,7 +52,7 @@ public class CreateOrder {
                 	price.add(orderDetails[34]);
                 	tax.add("0.2");
                 	
-                	listOfOrders.add(new Order(quanity,sku,price,tax,orderNumber,salesOrderNum,c,siteCode));
+                	listOfOrders.add(new Order(quanity,sku,price,tax,orderNumber,salesOrderNum,c,siteCode,buyerName,poType));
                 	
                 }
                 // if continuing order
