@@ -25,13 +25,14 @@ public class CreateOrder {
         	br.readLine();
             while ((line = br.readLine()) != null) {
 
+            	line = line.replace("\"", "");
                 // use comma as separator
                 String[] orderDetails = line.split(cvsSplitBy);
                 //if new order
                 if(!cOrderNum.equals(orderDetails[0]))
                 {
                 	
-                	
+                
                 	cOrderNum = orderDetails[0];
                 	String buyerName = orderDetails[8];
                 	String poType = orderDetails[2];
