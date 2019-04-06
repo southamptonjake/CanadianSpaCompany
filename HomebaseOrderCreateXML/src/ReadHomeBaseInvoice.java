@@ -173,28 +173,120 @@ public class ReadHomeBaseInvoice {
 					country = "GB";
 					state = "";
 					zip = "";
-					String orderDate = "";
+				
+					NodeList textData = doc.getElementsByTagName("TextData");
+
+					Element el = (Element) textData.item(0);
+					NodeList addressNodes = el.getElementsByTagName("TextLine");
+
+					firstName = addressNodes.item(1).getTextContent();
+					lastName = addressNodes.item(2).getTextContent();
+					addr1 = addressNodes.item(3).getTextContent();
+					city = addressNodes.item(4).getTextContent();
+					state = addressNodes.item(5).getTextContent();
+					zip = addressNodes.item(6).getTextContent();
+					mobile = addressNodes.item(7).getTextContent();
+					phone = addressNodes.item(8).getTextContent();
+
+					
+					@SuppressWarnings("unused")
 					String orderNum = "";
+					@SuppressWarnings("unused")
 					String customerOrderNumber = "";
+					@SuppressWarnings("unused")
 					String storeRef = "";
+					
+					NodeList references = doc.getElementsByTagName("References");
+
+					el = (Element) references.item(0);
+					NodeList orderNumbers = el.getElementsByTagName("Reference");
+
+					for(int p = 0; p < orderNumbers.getLength(); p ++)
+					{
+						Node number = orderNumbers.item(p);
+						String owner = number.getAttributes().getNamedItem("owner").getTextContent();
+						if(owner.equals("Company"))
+						{
+							customerOrderNumber = number.getTextContent();
+						}
+						else if(owner.equals("Partner"))
+						{
+							orderNum = number.getTextContent();
+						}
+					}
+
+					NodeList entities = doc.getElementsByTagName("Entity");
+
+					for(int p = 0; p < entities.getLength(); p ++)
+					{
+						Node entity = entities.item(p);
+						String function = entity.getAttributes().getNamedItem("function").getTextContent();
+
+						if(function.equals("ShipTo"))
+						{
+							el = (Element) entity;
+
+							NodeList identify = el.getElementsByTagName("Identifier");
+							for(int z = 0; z < identify.getLength(); z ++)
+							{
+								Node identidy = identify.item(z);
+								String function2 = identidy.getAttributes().getNamedItem("function").getTextContent();
+								if(function2.equals("GLN"))
+								{
+									storeRef = identidy.getTextContent();
+								}
+							}
+						}
+					}
+					
+					
+
 					ArrayList<String> sku = new ArrayList<String>();
-					ArrayList<String> quanity = new ArrayList<String>();
-					
-					
+					ArrayList<String> quanity = new ArrayList<String>();	
 					ArrayList<String> price = new ArrayList<String>();
 					ArrayList<String> tax = new ArrayList<String>();
 					
-					NodeList header = doc.getElementsByTagName("Header").item(0).getChildNodes();
-					
-					
+					NodeList products = doc.getElementsByTagName("Product");
 					
 					
 
-					System.out.println(header.item(7).getTextContent());
+					for(int p = 0; p < products.getLength(); p ++)
+					{
+						Node product = products.item(p);
+						String xrefMode = product.getAttributes().getNamedItem("xrefMode").getTextContent();
+						
+						if(xrefMode.equals("Target"))
+						{
+							el = (Element) product;
 
-					System.out.println(orderDate);
-					System.out.println(orderNum);
-					System.out.println(customerOrderNumber);
+							//find sku
+							NodeList identify = el.getElementsByTagName("Identifier");
+							for(int z = 0; z < identify.getLength(); z ++)
+							{
+								Node identidy = identify.item(z);
+								String function2 = identidy.getAttributes().getNamedItem("function").getTextContent();
+								if(function2.equals("ProductCode"))
+								{
+									String owner = identidy.getAttributes().getNamedItem("owner").getTextContent();
+									if(owner.equals("Company"))
+									{
+										sku.add(identidy.getTextContent());
+									}
+								
+								}
+							}
+							//find quant
+							
+							
+							//find price
+						}
+						
+						
+					}
+
+
+
+
 
 					/*
 				if(orderDate.equals("") || orderNum.equals("") || customerOrderNumber.equals(""))
