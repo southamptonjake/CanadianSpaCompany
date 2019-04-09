@@ -40,7 +40,7 @@ public class StatusReport {
 
 	public static void createStatusReport(ArrayList<StatusReport> listOfReports)
 	{
-		SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			InputStream inputStream = new FileInputStream ("Status Update.xls");

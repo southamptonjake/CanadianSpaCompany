@@ -39,52 +39,6 @@ import org.apache.poi.ss.usermodel.Row;
 public class ReadHomeBaseInvoice {
 
 
-
-	private static void printNote(NodeList nodeList) {
-
-		for (int count = 0; count < nodeList.getLength(); count++) {
-
-			System.out.println("node list:" + count);
-			Node tempNode = nodeList.item(count);
-
-			// make sure it's element node.
-			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-
-				// get node name and value
-				System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-
-				if (tempNode.hasAttributes()) {
-
-					// get attributes names and values
-					NamedNodeMap nodeMap = tempNode.getAttributes();
-
-					for (int i = 0; i < nodeMap.getLength(); i++) {
-
-						System.out.println("attr list:" + i);
-						Node node = nodeMap.item(i);
-						System.out.println("attr name : " + node.getNodeName());
-						System.out.println("attr value : " + node.getNodeValue());
-
-					}
-
-				}
-
-				if (tempNode.hasChildNodes()) {
-
-					// loop again if has child nodes
-					//printNote(tempNode.getChildNodes());
-
-				}
-
-				System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-
-			}
-
-		}
-
-	}
-
-
 	public static void main(String[] args) {
 
 
@@ -130,7 +84,7 @@ public class ReadHomeBaseInvoice {
 						if (files[i].getName().equals(o))
 						{
 
-							seen = false;
+							seen = true;
 						}
 					}
 				} catch (IOException e2) {
@@ -189,6 +143,11 @@ public class ReadHomeBaseInvoice {
 					phone = addressNodes.item(8).getTextContent();
 
 					
+					String orderDate = "";
+					orderDate = doc.getElementsByTagName("Date").item(0).getTextContent();
+					System.out.println(orderDate);
+					
+					
 					@SuppressWarnings("unused")
 					String orderNum = "";
 					@SuppressWarnings("unused")
@@ -242,7 +201,7 @@ public class ReadHomeBaseInvoice {
 					
 
 					ArrayList<String> sku = new ArrayList<String>();
-					ArrayList<String> quanity = new ArrayList<String>();	
+					ArrayList<String> quantity = new ArrayList<String>();	
 					ArrayList<String> price = new ArrayList<String>();
 					ArrayList<String> tax = new ArrayList<String>();
 					
@@ -276,9 +235,18 @@ public class ReadHomeBaseInvoice {
 								}
 							}
 							//find quant
-							
+							NodeList quantitys = el.getElementsByTagName("UnitQuantity");
+							quantity.add(quantitys.item(0).getTextContent());
+							System.out.println(quantitys.item(0).getTextContent());
 							
 							//find price
+						
+							NodeList values = el.getElementsByTagName("Value");
+							price.add(values.item(0).getTextContent());
+							System.out.println(values.item(0).getTextContent());
+							
+							tax.add("0.2");
+							
 						}
 						
 						
@@ -288,7 +256,7 @@ public class ReadHomeBaseInvoice {
 
 
 
-					/*
+					
 				if(orderDate.equals("") || orderNum.equals("") || customerOrderNumber.equals(""))
 				{
 					throw new Exception();
@@ -296,13 +264,13 @@ public class ReadHomeBaseInvoice {
 				JOptionPane.showMessageDialog(null, "Uploading: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
 				StatusReport s = new StatusReport(orderNum,orderDate,customerOrderNumber);
 				Customer c = new Customer(email, phone, mobile,firstName, lastName, company,addr1,  addr2, city, country,state, zip);
-				Order o = new Order(quanity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
-				o.upload();
+				Order o = new Order(quantity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
+				//o.upload();
 				countUpload ++;
 				JOptionPane.showMessageDialog(null, "Uploaded: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
 				System.out.println("uploaded " + files[i].getName());
 				reportsToAdd.add(s);
-					 */
+					 
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -17,5 +17,11 @@ public class Customer {
 		this.country = country;
 		this.state = state;
 		this.zip = zip;
+
+
+		if(this.phone.equals("0000000000"))
+		{
+			this.phone = this.mobile;
+		}
 	}
 }
