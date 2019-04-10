@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document wrapperType="Order" documentSubType="FINAL" coreVersion="4.14.0" dllVersion="4.14.0" wrapperVersion="1" manuallyCreated="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///H:/FEMEA/FreewayDocument.xsd">
+	<XrefHistory>
+		<XrefHistoryRuleSet target="" generation="Child" generationDate="2019-04-05 09:28:44">
+			<XrefHistoryRuleSetItem id="963" type="Company" enabled="Y" severity="I" merged="Y" mergePriority="D" />
+			<XrefHistoryRuleSetItem id="964" type="Partner" enabled="Y" severity="I" merged="Y" mergePriority="D" />
+			<XrefHistoryRuleSetItem id="966" type="Currency" enabled="N" severity="I" merged="N" />
+			<XrefHistoryRuleSetItem id="965" type="Location" enabled="Y" severity="I" merged="Y" mergePriority="D" />
+			<XrefHistoryRuleSetItem id="969" type="PackSize" enabled="Y" severity="I" merged="Y" mergePriority="S" />
+			<XrefHistoryRuleSetItem id="968" type="Product" enabled="Y" severity="I" merged="Y" mergePriority="D" />
+			<XrefHistoryRuleSetItem id="967" type="TaxCode" enabled="N" severity="I" merged="Y" mergePriority="S" />
+			<XrefHistoryRuleSetItem id="970" type="UOM" enabled="N" severity="I" merged="Y" mergePriority="S" />
+		</XrefHistoryRuleSet>
+	</XrefHistory>
+	<EdiBatchInformation>
+		<SyntaxType>TRADACOMS</SyntaxType>
+		<FileGenerationNumber>1484</FileGenerationNumber>
+		<FileVersion>1</FileVersion>
+		<FileCreationDate>
+			<DateTime function="FileCreationDate">
+				<Date>2019-03-25</Date>
+				<Time>12:15:38</Time>
+			</DateTime>
+		</FileCreationDate>
+		<ApplicationReference>ORDHDR</ApplicationReference>
+		<InterchangeControlReference>1484</InterchangeControlReference>
+	</EdiBatchInformation>
+	<Header>
+		<Entities>
+			<Entity function="Company" xrefMode="Source">
+				<AddressLine function="Name"></AddressLine>
+				<Identifier function="GLN">5050085049512</Identifier>
+				<Identifier function="AccountCode" owner="Partner">0000041816</Identifier>
+			</Entity>
+			<Entity function="Partner" xrefMode="Source">
+				<AddressLine function="Name"></AddressLine>
+				<Identifier function="GLN">5013546129420</Identifier>
+			</Entity>
+			<Entity function="ShipTo" xrefMode="Source">
+				<AddressLine function="Name"></AddressLine>
+				<Identifier function="GLN">5013669803344</Identifier>
+			</Entity>
+			<Entity function="Company" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+				<AddressLine function="Name">Canadian Spa Company Ltd</AddressLine>
+				<AddressLine>Unit A, Salfords Trade Centre</AddressLine>
+				<AddressLine>Salbrook Road</AddressLine>
+				<AddressLine function="City">REDHILL</AddressLine>
+				<AddressLine function="PostalCode">RH1 5GL</AddressLine>
+				<ISOCountry>GB</ISOCountry>
+				<DisplayName>Canadian Spa Co</DisplayName>
+				<Identifier function="GLN">5050085049512</Identifier>
+				<Identifier function="AccountCode" owner="Partner">0000041816</Identifier>
+				<Text function="ReferenceIdentifier" description="Fiscal Number" key="FISCAL_NUM">
+					<TextLine>2777344</TextLine>
+				</Text>
+			</Entity>
+			<Entity function="Partner" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+				<AddressLine function="Name">HHGL Ltd</AddressLine>
+				<AddressLine>T/A Homebase</AddressLine>
+				<AddressLine>Witan Gate House 500-600 Witan Gate</AddressLine>
+				<AddressLine>Doncastle Road</AddressLine>
+				<AddressLine function="City">MILTON KEYNES</AddressLine>
+				<AddressLine function="Province">Buckinghamshire</AddressLine>
+				<AddressLine function="PostalCode">MK9 1BA</AddressLine>
+				<ISOCountry>GB</ISOCountry>
+				<DisplayName>Homebase</DisplayName>
+				<Identifier function="GLN">5013546129420</Identifier>
+			</Entity>
+			<Entity function="ShipTo" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+				<AddressLine function="Name">HOMEBASE</AddressLine>
+				<AddressLine>PARK FARM RD</AddressLine>
+				<AddressLine function="City">FOLKESTONE</AddressLine>
+				<AddressLine function="Province">KENT</AddressLine>
+				<AddressLine function="PostalCode">CT19 5FJ</AddressLine>
+				<ISOCountry>GB</ISOCountry>
+				<DisplayName>HOMEBASE (334) FOLKESTONE</DisplayName>
+				<Identifier function="GLN">5013669803344</Identifier>
+				<Identifier function="AccountCode" owner="Partner">334</Identifier>
+			</Entity>
+		</Entities>
+		<References>
+			<Reference function="OrderNumber" owner="Company">0222920905</Reference>
+			<Reference function="OrderNumber" owner="Partner">4517774304</Reference>
+		</References>
+		<DatesAndTimes>
+			<DateTime function="RequestedDeliveryEarliestDateTime">
+				<Date>2019-04-08</Date>
+				<Time>00:00:00</Time>
+			</DateTime>
+		</DatesAndTimes>
+		<TextData>
+			<Text function="GeneralInstructions">
+				<TextLine>Mrs</TextLine>
+				<TextLine>hills</TextLine>
+				<TextLine>.</TextLine>
+				<TextLine>The Oaks, Bromley Green Road</TextLine>
+				<TextLine>ASHFORD</TextLine>
+				<TextLine>KE</TextLine>
+				<TextLine>TN26 2EG</TextLine>
+				<TextLine>07432016221</TextLine>
+				<TextLine>01233732264</TextLine>
+			</Text>
+		</TextData>
+		<Currencies>
+			<Currency function="OrderCurrency" xrefMode="Source" />
+			<Currency function="OrderCurrency" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44" useSourceData="Yes" />
+		</Currencies>
+		<PaymentTerms>
+			<PaymentTermsDetail xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+				<PaymentTermsText>60 days</PaymentTermsText>
+				<SettlementPercentage>0</SettlementPercentage>
+				<IncludeSettlementInTax>false</IncludeSettlementInTax>
+				<TermsBasis>Invoice</TermsBasis>
+			</PaymentTermsDetail>
+		</PaymentTerms>
+		<TaxExemption>
+			<TaxExemptionDetail xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44" useSourceData="Yes" />
+		</TaxExemption>
+	</Header>
+	<Details function="OrderLines">
+		<Line function="OrderLine" manuallyCreated="false" uniqueIdentifier="3a05c2dc-1d21-4f48-b8da-5a07dc80d202">
+			<Sequences>
+				<Sequence function="SequenceNumber">1</Sequence>
+			</Sequences>
+			<TextData>
+				<Text function="OrderLineReference">
+					<TextLine>1</TextLine>
+				</Text>
+			</TextData>
+			<Products>
+				<Product xrefMode="Source">
+					<Identifier function="GTIN13">0700697210477</Identifier>
+					<Identifier function="ProductCode" owner="Company">CANADIAN S</Identifier>
+					<Identifier function="ProductCode" owner="Partner">432892</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>CANADIAN SPA THUNDERBAY SPA</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>4600</Value>
+					</MonetaryAmount>
+					<Flag function="SubjectToSettlement">Y</Flag>
+					<Flag function="ContainsXrefData">N</Flag>
+				</Product>
+				<Product xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<Identifier function="GTIN13">0700697210477</Identifier>
+					<Identifier function="ProductCode" owner="Company">KH-10030</Identifier>
+					<Identifier function="ProductCode" owner="Partner">432892</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>Thunder Bay Dual Pump Hot Tub Installed</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>4600</Value>
+					</MonetaryAmount>
+					<Flag function="Discontinued">N</Flag>
+					<Flag function="ContainsXrefData">Y</Flag>
+				</Product>
+			</Products>
+			<Quantities>
+				<Quantity function="OrderQuantity" xrefMode="Source">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+				<Quantity function="OrderQuantity" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+			</Quantities>
+		</Line>
+		<Line function="OrderLine" manuallyCreated="false" uniqueIdentifier="d84dadbe-9312-4243-b735-ac38848b0a88">
+			<Sequences>
+				<Sequence function="SequenceNumber">2</Sequence>
+			</Sequences>
+			<TextData>
+				<Text function="OrderLineReference">
+					<TextLine>2</TextLine>
+				</Text>
+			</TextData>
+			<Products>
+				<Product xrefMode="Source">
+					<Identifier function="GTIN13">0700697210972</Identifier>
+					<Identifier function="ProductCode" owner="Company">KF-10033</Identifier>
+					<Identifier function="ProductCode" owner="Partner">478246</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>SQUARE FURNITURE STEP FOR 86IN HOT TUBS</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>175</Value>
+					</MonetaryAmount>
+					<Flag function="SubjectToSettlement">Y</Flag>
+					<Flag function="ContainsXrefData">N</Flag>
+				</Product>
+				<Product xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<Identifier function="GTIN13">0700697210972</Identifier>
+					<Identifier function="ProductCode" owner="Company">KF-10033</Identifier>
+					<Identifier function="ProductCode" owner="Partner">478246</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>Treppe fr 2,20 M breite Whirlpools</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1.0000</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>175</Value>
+					</MonetaryAmount>
+					<Flag function="Discontinued">N</Flag>
+					<Flag function="ContainsXrefData">Y</Flag>
+				</Product>
+			</Products>
+			<Quantities>
+				<Quantity function="OrderQuantity" xrefMode="Source">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+				<Quantity function="OrderQuantity" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+			</Quantities>
+		</Line>
+		<Line function="OrderLine" manuallyCreated="false" uniqueIdentifier="a5970ce9-2e3e-403e-a5db-96782a9f6ca7">
+			<Sequences>
+				<Sequence function="SequenceNumber">3</Sequence>
+			</Sequences>
+			<TextData>
+				<Text function="OrderLineReference">
+					<TextLine>3</TextLine>
+				</Text>
+			</TextData>
+			<Products>
+				<Product xrefMode="Source">
+					<Identifier function="GTIN13">0700697210071</Identifier>
+					<Identifier function="ProductCode" owner="Company">DELUXE SPA</Identifier>
+					<Identifier function="ProductCode" owner="Partner">432910</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>CANADIAN SPA DELUXE CHEMICAL KIT</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>70</Value>
+					</MonetaryAmount>
+					<Flag function="SubjectToSettlement">Y</Flag>
+					<Flag function="ContainsXrefData">N</Flag>
+				</Product>
+				<Product xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<Identifier function="GTIN13">0700697210071</Identifier>
+					<Identifier function="ProductCode" owner="Company">KA-10089</Identifier>
+					<Identifier function="ProductCode" owner="Partner">432910</Identifier>
+					<Text function="ProductDescription">
+						<TextLine>Canadian Spa Deluxe Hot Tub Chemical Kit</TextLine>
+					</Text>
+					<Quantity function="PackingQuantity">
+						<UnitQuantity>1</UnitQuantity>
+					</Quantity>
+					<MonetaryAmount function="SpecifiedPrice">
+						<Value>70</Value>
+					</MonetaryAmount>
+					<Flag function="Discontinued">N</Flag>
+					<Flag function="ContainsXrefData">Y</Flag>
+				</Product>
+			</Products>
+			<Quantities>
+				<Quantity function="OrderQuantity" xrefMode="Source">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+				<Quantity function="OrderQuantity" xrefMode="Target" generation="Child" generationDate="2019-04-05 09:28:44">
+					<UnitQuantity>1</UnitQuantity>
+				</Quantity>
+			</Quantities>
+		</Line>
+	</Details>
+	<Footer>
+		<Totals>
+			<Quantities>
+				<Quantity function="OrderLineCount">
+					<UnitQuantity>3</UnitQuantity>
+				</Quantity>
+			</Quantities>
+		</Totals>
+	</Footer>
+</Document>

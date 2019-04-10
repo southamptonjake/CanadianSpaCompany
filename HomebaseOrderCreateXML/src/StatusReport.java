@@ -40,7 +40,7 @@ public class StatusReport {
 
 	public static void createStatusReport(ArrayList<StatusReport> listOfReports)
 	{
-		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat form = new SimpleDateFormat("dd/MM/yy");
 
 		try {
 			InputStream inputStream = new FileInputStream ("Status Update.xls");
@@ -66,6 +66,7 @@ public class StatusReport {
 				}
 				else
 				{
+
 					String orderNumber,transactionDate,originalCustomerOrderNumber,status;
 					orderNumber = row.getCell(1).getStringCellValue();
 					status = row.getCell(2).getStringCellValue();
@@ -110,6 +111,7 @@ public class StatusReport {
 				row.getCell(1).setCellValue(cReport.orderNumber);
 				row.getCell(2).setCellValue(cReport.status);
 				try {
+					
 					row.getCell(3).setCellValue(form.parse(cReport.transactionDate));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block

@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,7 +92,6 @@ public class ReadHomeBaseInvoice {
 				}
 				if(!seen)	
 				{
-					System.out.println(i);
 					countRead ++;
 					try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 							new FileOutputStream("readOrders.txt",true), "utf-8"))) {
@@ -127,34 +127,50 @@ public class ReadHomeBaseInvoice {
 					country = "GB";
 					state = "";
 					zip = "";
-				
+
 					NodeList textData = doc.getElementsByTagName("TextData");
 
 					Element el = (Element) textData.item(0);
 					NodeList addressNodes = el.getElementsByTagName("TextLine");
 
-					firstName = addressNodes.item(1).getTextContent();
-					lastName = addressNodes.item(2).getTextContent();
-					addr1 = addressNodes.item(3).getTextContent();
-					city = addressNodes.item(4).getTextContent();
-					state = addressNodes.item(5).getTextContent();
-					zip = addressNodes.item(6).getTextContent();
-					mobile = addressNodes.item(7).getTextContent();
-					phone = addressNodes.item(8).getTextContent();
+					if(addressNodes.getLength() == 9)
+					{
+						firstName = addressNodes.item(1).getTextContent();
+						lastName = addressNodes.item(2).getTextContent();
+						addr1 = addressNodes.item(3).getTextContent();
+						city = addressNodes.item(4).getTextContent();
+						state = addressNodes.item(5).getTextContent();
+						zip = addressNodes.item(6).getTextContent();
+						mobile = addressNodes.item(7).getTextContent();
+						phone = addressNodes.item(8).getTextContent();
+					}
+					if(addressNodes.getLength() == 8)
+					{
+						firstName = addressNodes.item(1).getTextContent();
+						lastName = addressNodes.item(2).getTextContent();
+						addr1 = addressNodes.item(3).getTextContent();
+						city = addressNodes.item(4).getTextContent();
+						state = addressNodes.item(5).getTextContent();
+						zip = addressNodes.item(6).getTextContent();
+						phone = addressNodes.item(7).getTextContent();
+					}
 
-					
+
 					String orderDate = "";
-					orderDate = doc.getElementsByTagName("Date").item(0).getTextContent();
-					System.out.println(orderDate);
-					
-					
+					orderDate = doc.getElementsByTagName("Date").item(1).getTextContent();
+					SimpleDateFormat inputform =new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat outputform = new SimpleDateFormat("dd/MM/yy");
+					Date orderDated = inputform.parse(orderDate);
+					orderDate = outputform.format(orderDated);
+				
+
 					@SuppressWarnings("unused")
 					String orderNum = "";
 					@SuppressWarnings("unused")
 					String customerOrderNumber = "";
 					@SuppressWarnings("unused")
 					String storeRef = "";
-					
+
 					NodeList references = doc.getElementsByTagName("References");
 
 					el = (Element) references.item(0);
@@ -197,23 +213,23 @@ public class ReadHomeBaseInvoice {
 							}
 						}
 					}
-					
-					
+
+
 
 					ArrayList<String> sku = new ArrayList<String>();
 					ArrayList<String> quantity = new ArrayList<String>();	
 					ArrayList<String> price = new ArrayList<String>();
 					ArrayList<String> tax = new ArrayList<String>();
-					
+
 					NodeList products = doc.getElementsByTagName("Product");
-					
-					
+
+
 
 					for(int p = 0; p < products.getLength(); p ++)
 					{
 						Node product = products.item(p);
 						String xrefMode = product.getAttributes().getNamedItem("xrefMode").getTextContent();
-						
+
 						if(xrefMode.equals("Target"))
 						{
 							el = (Element) product;
@@ -231,46 +247,44 @@ public class ReadHomeBaseInvoice {
 									{
 										sku.add(identidy.getTextContent());
 									}
-								
+
 								}
 							}
 							//find quant
 							NodeList quantitys = el.getElementsByTagName("UnitQuantity");
 							quantity.add(quantitys.item(0).getTextContent());
-							System.out.println(quantitys.item(0).getTextContent());
-							
+
 							//find price
-						
+
 							NodeList values = el.getElementsByTagName("Value");
 							price.add(values.item(0).getTextContent());
-							System.out.println(values.item(0).getTextContent());
-							
+
 							tax.add("0.2");
-							
+
 						}
-						
-						
+
+
 					}
 
 
 
 
 
-					
-				if(orderDate.equals("") || orderNum.equals("") || customerOrderNumber.equals(""))
-				{
-					throw new Exception();
-				}
-				JOptionPane.showMessageDialog(null, "Uploading: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
-				StatusReport s = new StatusReport(orderNum,orderDate,customerOrderNumber);
-				Customer c = new Customer(email, phone, mobile,firstName, lastName, company,addr1,  addr2, city, country,state, zip);
-				Order o = new Order(quantity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
-				//o.upload();
-				countUpload ++;
-				JOptionPane.showMessageDialog(null, "Uploaded: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
-				System.out.println("uploaded " + files[i].getName());
-				reportsToAdd.add(s);
-					 
+
+					if(orderDate.equals("") || orderNum.equals("") || customerOrderNumber.equals(""))
+					{
+						throw new Exception();
+					}
+					JOptionPane.showMessageDialog(null, "Uploading: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
+					StatusReport s = new StatusReport(orderNum,orderDate,customerOrderNumber);
+					Customer c = new Customer(email, phone, mobile,firstName, lastName, company,addr1,  addr2, city, country,state, zip);
+					Order o = new Order(quantity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
+					o.upload();
+					countUpload ++;
+					JOptionPane.showMessageDialog(null, "Uploaded: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("uploaded " + files[i].getName());
+					reportsToAdd.add(s);
+
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
