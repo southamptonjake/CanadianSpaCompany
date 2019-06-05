@@ -135,8 +135,8 @@ public class ReadHomeBaseInvoice {
 
 					if(addressNodes.getLength() == 9)
 					{
-						firstName = addressNodes.item(1).getTextContent();
-						lastName = addressNodes.item(2).getTextContent();
+						firstName = addressNodes.item(2).getTextContent();
+						lastName = addressNodes.item(1).getTextContent();
 						addr1 = addressNodes.item(3).getTextContent();
 						city = addressNodes.item(4).getTextContent();
 						state = addressNodes.item(5).getTextContent();
