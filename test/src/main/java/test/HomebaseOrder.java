@@ -1,18 +1,13 @@
-package entities;
+package test;
 
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
 
-@Entity
 public class HomebaseOrder {
 	
-	@Id
 	public Long id;
-	public @Index int stage;
-	public @Index String customerEmail;
-	public @Index String customerPhone;
-	public @Index int allocationsUsed;
+	public  int stage;
+	public  String customerEmail;
+	public  String customerPhone;
+	public  int allocationsUsed;
 	
 	
 

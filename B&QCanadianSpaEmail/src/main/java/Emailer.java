@@ -8,19 +8,23 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
-public class OrderReceipt {
+import entities.Address;
+import entities.LineItems;
 
-	String recipient;
-
-	public OrderReceipt(String recipient) {
-		String apikey = "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";
+public final class Emailer {
+	
+	public static void orderRecieved(String email, LineItems li, Address a)
+	{
+		System.out.println();
+		String apikey = "***REMOVED***";
 		Email from = new Email("noreply@canadianspacompany.com");
 		String subject = "";
-		Email to = new Email(recipient);
+		Email to = new Email("***REMOVED***");
 		Content content = new Content("text/plain", "");
 		Mail mail = new Mail(from, subject, to, content);
-		//mail.personalization.get(0).addSubstitution("-name-", "Example User");
-		//mail.personalization.get(0).addSubstitution("-city-", "Denver");
+		mail.personalization.get(0).addSubstitution("-name-", a.name());
+		mail.personalization.get(0).addSubstitution("-address-", a.toString());
+		mail.personalization.get(0).addSubstitution("-lineItems-", a.toString());
 		mail.setTemplateId("d-520336ae738a41fcb33c8291584495a5");
 		SendGrid sg = new SendGrid(apikey);
 		Request emailrequest = new Request();
@@ -39,8 +43,14 @@ public class OrderReceipt {
 
 		}
 	}
-
-
-
+	
+	public static void orderShipped(String email, LineItems li,Address a, String trackingURL, String trackingNumber, int stage)
+	{
+		
+	}
+	
+	public static void holder(){
+		
+	}
 
 }

@@ -1,0 +1,22 @@
+package test;
+
+
+
+public class LineItems {
+	
+	public Long id;
+	public String[] productTitles;
+	public int[] quantities;
+	public LineItems(String[] productTitles, int[] quantities) {
+		this.productTitles = productTitles;
+		this.quantities = quantities;
+	}
+	public LineItems() {
+		
+	}
+	
+	
+	
+	
+	
+}

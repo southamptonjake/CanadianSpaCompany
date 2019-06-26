@@ -22,6 +22,7 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
+import entities.Address;
 import entities.HomebaseOrder;
 import entities.LineItems;
 import entities.Settings;
@@ -36,12 +37,27 @@ public class FindUpdates extends HttpServlet {
 	public class Order{
 		int id;
 		Allocations[] allocations;
-		String allocated_completly;
+		boolean allocated_completely;
+		DeliverTo deliver_to;
+
 	}
 
+	public class DeliverTo
+	{
+		String first_name;
+		String last_name;
+		String address1;
+		String address2;
+		String city;
+		String country;
+		String state;
+		String zip;
+		String phone;
+	}
+	
 	public class Allocations{
 		Shipment shipment;
-		LineItems[] line_items;
+		LineItem[] line_items;
 	}
 
 	public class Shipment{
@@ -54,7 +70,7 @@ public class FindUpdates extends HttpServlet {
 		String tracking_number;
 	}
 	
-	public class LineItems
+	public class LineItem
 	{
 		int quantity;
 		Sellable sellable;
@@ -74,39 +90,69 @@ public class FindUpdates extends HttpServlet {
 
 		ObjectifyService.register(HomebaseOrder.class); 
 		ObjectifyService.register(Settings.class); 
-		ObjectifyService.register(LineItems.class); 
-
-
 
 		Settings s = ObjectifyService.ofy().load().type(Settings.class).first().now();
 
 
 		Query<HomebaseOrder> q = ObjectifyService.ofy().load().type(HomebaseOrder.class);
 
-		//get all the orders which have never had a allocations
+		//get all the orders not fully allocated
 		Query<HomebaseOrder> q0 = q.filter("stage", 0);
 		List<HomebaseOrder> hos0 = q0.list();	
-		//get all the orders which have had partial allocations
-		Query<HomebaseOrder> q1 = q.filter("stage", 1);
-		List<HomebaseOrder> hos1 = q1.list();	
+	
 
 		for(HomebaseOrder h: hos0)
 		{
+			Order o = idToClass(h.id);
+			if(o.allocated_completely)
+			{
+				h.stage = 1;
+				response.getWriter().println("here");
+
+			}
+			
+			
+			if(o.allocations.length > h.allocationsUsed)
+			{
+				for(int i = o.allocations.length - 1; i >= h.allocationsUsed; i --)
+				{
+					
+					int num = o.allocations[i].line_items.length;
+					
+					String[] productTitles = new String[num] ;
+					int[] quantities = new int[num];
+
+					for(int p = 0; p < num; p ++)
+					{
+						productTitles[p] = o.allocations[i].line_items[p].sellable.product_title;
+						quantities[p] = o.allocations[i].line_items[p].quantity; 
+					}
+					
+					LineItems li = new LineItems(productTitles,quantities);
+					
+					DeliverTo dt = o.deliver_to;
+					Address a = new Address(dt.first_name,dt.last_name,dt.address1,dt.address2,dt.city,dt.country,dt.state,dt.zip,dt.phone);
+				
+					
+					
+					Emailer.orderShipped(h.customerEmail, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
+					Texter.orderShipped(h.customerPhone, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
+				}
+			}
+			
+			h.allocationsUsed = o.allocations.length;
+			ObjectifyService.ofy().save().entity(h).now();
+
+			
+			
 			
 		}
 
-
-
-
-
-
-
-
-		response.getWriter().println(hos1.size());
+		response.getWriter().println(hos0.size());
 
 	}
 
-	public Order idToClass(int orderId)
+	public Order idToClass(Long orderId)
 	{
 		String APIKEY = "***REMOVED***";
 
@@ -125,6 +171,8 @@ public class FindUpdates extends HttpServlet {
 
 		return g.fromJson(body, Order.class);
 	}
+	
+	
 	
 
 }

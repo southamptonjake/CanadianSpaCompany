@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 
-
+import entities.Address;
 import entities.HomebaseOrder;
 import entities.LineItems;
 import entities.Settings;
@@ -39,6 +39,14 @@ public class ReadNewOrders extends HttpServlet {
 
 	public class DeliverTo
 	{
+		String first_name;
+		String last_name;
+		String address1;
+		String address2;
+		String city;
+		String country;
+		String state;
+		String zip;
 		String phone;
 	}
 	
@@ -62,7 +70,6 @@ public class ReadNewOrders extends HttpServlet {
 
 		ObjectifyService.register(HomebaseOrder.class); 
 		ObjectifyService.register(Settings.class); 
-		ObjectifyService.register(LineItems.class); 
 
 
 		Settings s = ObjectifyService.ofy().load().type(Settings.class).first().now();
@@ -70,7 +77,7 @@ public class ReadNewOrders extends HttpServlet {
 		String APIKEY = "***REMOVED***";
 
 		Client client = ClientBuilder.newClient();
-		javax.ws.rs.core.Response veeqoresponse = client.target("https://api.veeqo.com/orders?since_id="+s.lastId+"&tags=B%20%26%20Q")
+		javax.ws.rs.core.Response veeqoresponse = client.target("https://api.veeqo.com/orders?page_size=25&since_id="+s.lastId+"&tags=B%20%26%20Q")
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("x-api-key", APIKEY)
 				.get();
@@ -89,8 +96,12 @@ public class ReadNewOrders extends HttpServlet {
 			{
 		        Pattern pattern = Pattern.compile("([a-z0-9_.-]+)@([a-z0-9_.-]+[a-z])");
 		        Matcher matcher = pattern.matcher(o.customer_note.text);
-		        matcher.find();
-		        String email = matcher.group();
+		        String email = "";
+		        if(matcher.find())
+		        {
+		        	email  = matcher.group();
+		        }
+		      
 				Long id = (long) o.id;
 				String phoneNum = o.deliver_to.phone;
 				
@@ -107,8 +118,16 @@ public class ReadNewOrders extends HttpServlet {
 				
 				LineItems li = new LineItems(productTitles,quantities);
 				
-				HomebaseOrder ho = new HomebaseOrder(id,email,phoneNum,li);
+				HomebaseOrder ho = new HomebaseOrder(id,email,phoneNum);
+				
 				ObjectifyService.ofy().save().entity(ho).now();
+
+				DeliverTo dt = o.deliver_to;
+				Address a = new Address(dt.first_name,dt.last_name,dt.address1,dt.address2,dt.city,dt.country,dt.state,dt.zip,dt.phone);
+				
+				Emailer.orderRecieved(ho.customerEmail, li,a);
+				Texter.orderRecieved(ho.customerPhone, li,a);
+				
 			}
 
 			s.lastId = (long) orders[0].id;
