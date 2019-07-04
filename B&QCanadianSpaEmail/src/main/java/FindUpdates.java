@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,45 +104,52 @@ public class FindUpdates extends HttpServlet {
 
 		for(HomebaseOrder h: hos0)
 		{
-			Order o = idToClass(h.id);
-			if(o.allocated_completely)
-			{
-				h.stage = 1;
-				response.getWriter().println("here");
-
-			}
-			
-			
-			if(o.allocations.length > h.allocationsUsed)
-			{
-				for(int i = o.allocations.length - 1; i >= h.allocationsUsed; i --)
+			try {
+				Order o = idToClass(h.id);
+				if(o.allocated_completely)
 				{
-					
-					int num = o.allocations[i].line_items.length;
-					
-					String[] productTitles = new String[num] ;
-					int[] quantities = new int[num];
+					h.stage = 1;
 
-					for(int p = 0; p < num; p ++)
-					{
-						productTitles[p] = o.allocations[i].line_items[p].sellable.product_title;
-						quantities[p] = o.allocations[i].line_items[p].quantity; 
-					}
-					
-					LineItems li = new LineItems(productTitles,quantities);
-					
-					DeliverTo dt = o.deliver_to;
-					Address a = new Address(dt.first_name,dt.last_name,dt.address1,dt.address2,dt.city,dt.country,dt.state,dt.zip,dt.phone);
-				
-					
-					
-					Emailer.orderShipped(h.customerEmail, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
-					Texter.orderShipped(h.customerPhone, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
 				}
+				
+				
+				if(o.allocations.length > h.allocationsUsed)
+				{
+					for(int i = o.allocations.length - 1; i >= h.allocationsUsed; i --)
+					{
+						
+						int num = o.allocations[i].line_items.length;
+						
+						String[] productTitles = new String[num] ;
+						int[] quantities = new int[num];
+
+						for(int p = 0; p < num; p ++)
+						{
+							productTitles[p] = o.allocations[i].line_items[p].sellable.product_title;
+							quantities[p] = o.allocations[i].line_items[p].quantity; 
+						}
+						
+						LineItems li = new LineItems(productTitles,quantities);
+						
+						DeliverTo dt = o.deliver_to;
+						Address a = new Address(dt.first_name,dt.last_name,dt.address1,dt.address2,dt.city,dt.country,dt.state,dt.zip,dt.phone);
+						String name = dt.first_name + " " +  dt.last_name;
+
+						
+						
+						Emailer.orderShipped(name, h.customerEmail, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
+						Texter.orderShipped(name, h.customerPhone, li,a,o.allocations[i].shipment.tracking_url,o.allocations[i].shipment.tracking_number.tracking_number, h.stage);
+					}
+				}
+				
+				h.allocationsUsed = o.allocations.length;
+				ObjectifyService.ofy().save().entity(h).now();
+			} catch (Exception e) {
+				  Logger log = Logger.getLogger(FindUpdates.class.getName());
+				  log.info("Deleted:" + h.id);
+
+				ObjectifyService.ofy().delete().entity(h).now();
 			}
-			
-			h.allocationsUsed = o.allocations.length;
-			ObjectifyService.ofy().save().entity(h).now();
 
 			
 			

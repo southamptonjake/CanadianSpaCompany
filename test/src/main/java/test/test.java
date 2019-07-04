@@ -12,13 +12,17 @@ import com.sendgrid.helpers.mail.objects.Email;
 public class test {
 
 	public static void main(String[] args) throws IOException {
-		String apikey = "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";
+		String apikey = "***REMOVED***";
 		Email from = new Email("jal2g15@soton.ac.uk");
 		String subject = "Sending with SendGrid is Fun";
 		Email to = new Email("***REMOVED***");
 		Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
 		Mail mail = new Mail(from, subject, to, content);
 
+		mail.setTemplateId("d-520336ae738a41fcb33c8291584495a5");
+
+		mail.getPersonalization().get(0).addDynamicTemplateData("name", "jake");
+		
 		SendGrid sg = new SendGrid(apikey);
 		Request request = new Request();
 		try {

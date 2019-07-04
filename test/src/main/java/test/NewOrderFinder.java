@@ -98,9 +98,11 @@ public class NewOrderFinder {
 		
 
 		DeliverTo dt = o.deliver_to;
+		String name = dt.first_name + " " +  dt.last_name;
 		Address a = new Address(dt.first_name,dt.last_name,dt.address1,dt.address2,dt.city,dt.country,dt.state,dt.zip,dt.phone);
 		
-		Emailer.orderRecieved(ho.customerEmail, li,a);
+		System.out.println("hi");
+		Emailer.orderRecieved(name,ho.customerEmail, li,a);
 		
 	}
 }

@@ -29,14 +29,14 @@ public class Address {
 	@Override
 	public String toString() {
 		String output = "";
-		output += first_name + " " + last_name + "\r\n";
-		output += address1 + "\r\n";
-		output += address2 + "\r\n";
-		output += city + "\r\n";
-		output += country + "\r\n";
-		output += state + "\r\n";
-		output += zip + "\r\n";
-		output += phone + "\r\n";
+		output += first_name + " " + last_name + ",\r\n";
+		output += address1 + ",\r\n";
+		output += address2 + ",\r\n";
+		output += city + ",\r\n";
+		output += country + ",\r\n";
+		output += state + ",\r\n";
+		output += zip + ",\r\n";
+		output += phone + ",\r\n";
 		return output;
 	}
 	
