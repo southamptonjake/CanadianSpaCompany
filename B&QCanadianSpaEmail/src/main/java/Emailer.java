@@ -18,7 +18,7 @@ public final class Emailer {
 		String apikey = "***REMOVED***";
 		Email from = new Email("noreply@canadianspacompany.com");
 		String subject = "";
-		Email to = new Email("***REMOVED***");
+		Email to = new Email(email);
 		Content content = new Content("text/plain", "a");
 		Mail mail = new Mail(from, subject, to, content);
 		
@@ -53,7 +53,7 @@ public final class Emailer {
 		String apikey = "***REMOVED***";
 		Email from = new Email("noreply@canadianspacompany.com");
 		String subject = "";
-		Email to = new Email("***REMOVED***");
+		Email to = new Email(email);
 		Content content = new Content("text/plain", "a");
 		Mail mail = new Mail(from, subject, to, content);
 		
