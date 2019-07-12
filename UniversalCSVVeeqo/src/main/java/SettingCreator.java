@@ -13,15 +13,15 @@ public class SettingCreator {
 		String csvFile = "orders.csv";
 		String line = "";
 		String cvsSplitBy = ",";
-va
+
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
 			String[] header = br.readLine().split(",");
 			
+			
 
-
-
+			
 
 
 
@@ -47,4 +47,4 @@ va
 }
 
 
-}
+
