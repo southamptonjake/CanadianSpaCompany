@@ -16,10 +16,10 @@ public class Order {
 	String notes;
 	String billingID;
 	Customer customer;
-
+	String channelID;
 
 	public Order(ArrayList<String> quanity, ArrayList<String> sku, ArrayList<String> price,
-			ArrayList<String> tax, String notes, Customer customer, String billingID ) {
+			ArrayList<String> tax, String notes, Customer customer, String billingID, String channelID ) {
 		super();
 		this.quanity = quanity;
 		this.sku = sku;
@@ -28,6 +28,8 @@ public class Order {
 		this.notes = notes;
 		this.customer = customer;
 		this.billingID = billingID;
+		this.channelID = channelID;
+		
 	}
 	
 	public void uploadOrder()
@@ -54,7 +56,7 @@ public class Order {
 		Entity payload = Entity.json("\r\n" + 
 				"{\r\n" + 
 				"    \"order\": {\r\n" + 
-				"        \"channel_id\": 46116,\r\n" + 
+				"        \"channel_id\":" + channelID + ",\r\n" + 
 				"        \"customer_id\":"+ billingID + ",\r\n" + 
 				"        \"deliver_to_attributes\": {\r\n" + 
 				"            \"address1\": \""+customer.addr1+"\",\r\n" + 	

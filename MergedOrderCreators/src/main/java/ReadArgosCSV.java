@@ -50,7 +50,7 @@ public class ReadArgosCSV {
                 	price.add(orderDetails[46]);
                 	tax.add("0.2");
                 	
-                	listOfOrders.add(new Order(quanity,sku,price,tax,notes,c,"15223361"));
+                	listOfOrders.add(new Order(quanity,sku,price,tax,notes,c,"15223361","46116"));
                 	
                 }
                 // if continuing order
