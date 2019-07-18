@@ -1,3 +1,4 @@
+package range;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,6 +6,9 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+
+import shared.Customer;
+import shared.Order;
 
 public class ReadRangeCSV {
 

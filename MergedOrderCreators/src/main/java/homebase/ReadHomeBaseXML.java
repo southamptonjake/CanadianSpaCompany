@@ -1,17 +1,18 @@
+package homebase;
 
 import java.io.BufferedWriter;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import shared.Customer;
+import shared.Order;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,16 +29,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 
-public class ReadHomeBaseInvoice {
+public class ReadHomeBaseXML {
 
 
 	public static void main(String[] args) {
@@ -279,7 +278,7 @@ public class ReadHomeBaseInvoice {
 					StatusReport s = new StatusReport(orderNum,orderDate,customerOrderNumber);
 					Customer c = new Customer(email, phone, mobile,firstName, lastName, company,addr1,  addr2, city, country,state, zip);
 					Order o = new Order(quantity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
-					o.upload();
+					o.uploadOrder();
 					countUpload ++;
 					JOptionPane.showMessageDialog(null, "Uploaded: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
 					System.out.println("uploaded " + files[i].getName());

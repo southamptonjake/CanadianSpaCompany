@@ -1,3 +1,4 @@
+package shared;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
@@ -8,15 +9,20 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import api.APIKEYS;
+
 
 public class Order {
 
 	String APIKEY = APIKEYS.veeqoApi;
-	ArrayList<String> quanity,sku,price,tax;
-	String notes;
-	String billingID;
-	Customer customer;
-	String channelID;
+	public ArrayList<String> quanity;
+	public ArrayList<String> sku;
+	public ArrayList<String> price;
+	public ArrayList<String> tax;
+	public String notes;
+	public String billingID;
+	public Customer customer;
+	public String channelID;
 
 	public Order(ArrayList<String> quanity, ArrayList<String> sku, ArrayList<String> price,
 			ArrayList<String> tax, String notes, Customer customer, String billingID, String channelID ) {

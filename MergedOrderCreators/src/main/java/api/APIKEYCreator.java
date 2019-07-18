@@ -1,3 +1,4 @@
+package api;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,7 +28,7 @@ public class APIKEYCreator {
 		JsonReader reader = new JsonReader(new FileReader("environment.json"));
 		ApiJson data = gson.fromJson(reader, ApiJson.class);
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream("./src/main/java/APIKEYS.java"), "utf-8"))) {
+				new FileOutputStream("./src/main/java/api/APIKEYS.java"), "utf-8"))) {
 			writer.write("public class APIKEYS {\n" + 
 					"	\n" + 
 					"	public static String veeqoApi = \""+data.veeqoApi+"\" ;\n" +

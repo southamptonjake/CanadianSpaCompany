@@ -1,3 +1,4 @@
+package argos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,8 +7,11 @@ import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import shared.Customer;
+import shared.Order;
 
-public class ReadBQCSV {
+
+public class ReadArgosCSV {
 
 	public ArrayList<Order> listOfOrders = new ArrayList<Order>();
 
@@ -17,54 +21,48 @@ public class ReadBQCSV {
         String line = "";
         String cvsSplitBy = ",";
 
-        
-        
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
         	String cOrderNum = "firstOrder";
         	br.readLine();
             while ((line = br.readLine()) != null) {
 
-            	line = line.replace("\"", "");
                 // use comma as separator
                 String[] orderDetails = line.split(cvsSplitBy);
                 //if new order
                 if(!cOrderNum.equals(orderDetails[0]))
                 {
-                	
-                
                 	cOrderNum = orderDetails[0];
-                	String buyerName = orderDetails[8];
-                	String poType = orderDetails[2];
-                	String salesOrderNum = orderDetails[23];
-                	String fullName = orderDetails[14];
-                	String firstName = fullName.split(" ")[1];
-                	String lastName = fullName.split(" ")[2];
-                	String siteCode = orderDetails[13];	
-                	Customer c = new Customer(orderDetails[21],orderDetails[19],orderDetails[20],firstName,lastName,"",orderDetails[15],"",orderDetails[16],orderDetails[17],"",orderDetails[18]);
+                	System.out.println(orderDetails[38]);
+                	Customer c = new Customer(orderDetails[9],orderDetails[26],orderDetails[38],orderDetails[10],orderDetails[11],orderDetails[12],orderDetails[13],orderDetails[14],orderDetails[21],orderDetails[24],orderDetails[23],orderDetails[20]);
                 	ArrayList<String> sku = new ArrayList<String>();
                 	ArrayList<String> quanity = new ArrayList<String>();
                 	ArrayList<String> price = new ArrayList<String>();
                 	ArrayList<String> tax = new ArrayList<String>();
+                	
+                	
                 	//cell A (0)
                 	String orderNumber = orderDetails[0];
-                	sku.add(orderDetails[29]);
-                	quanity.add(orderDetails[31]);
-                	price.add(orderDetails[34]);
+                	//cell BE (56)
+                	String orderRef = orderDetails[56];
+                	//cell BL (63)
+                	String customerSKU = orderDetails[63];
+                	
+                	
+                	String notes = orderNumber + " " + orderRef + " " + customerSKU;
+                	sku.add(orderDetails[42]);
+                	quanity.add(orderDetails[47]);
+                	price.add(orderDetails[46]);
                 	tax.add("0.2");
                 	
-                	String notes = orderNumber + " " + salesOrderNum + " " + siteCode;
-                	String billingID = findBillingID(poType,buyerName);
-                	
-                	
-                	listOfOrders.add(new Order(quanity,sku,price,tax,notes,c,billingID,"48307"));
+                	listOfOrders.add(new Order(quanity,sku,price,tax,notes,c,"15223361","46116"));
                 	
                 }
                 // if continuing order
                 else
                 {
-                	listOfOrders.get(listOfOrders.size() -1).quanity.add(orderDetails[31]);
-                	listOfOrders.get(listOfOrders.size() -1).sku.add(orderDetails[29]);
-                	listOfOrders.get(listOfOrders.size() -1).price.add(orderDetails[34]);
+                	listOfOrders.get(listOfOrders.size() -1).quanity.add(orderDetails[47]);
+                	listOfOrders.get(listOfOrders.size() -1).sku.add(orderDetails[42]);
+                	listOfOrders.get(listOfOrders.size() -1).price.add(orderDetails[46]);
                 	listOfOrders.get(listOfOrders.size() -1).tax.add("0.2");
                 }
                 
@@ -77,40 +75,10 @@ public class ReadBQCSV {
         }
        
 	}
-	
-	
-	public String findBillingID(String poType, String buyerName)
-	{
-		if(poType.equals("DC Manual PO"))
-		{
-			return "23678611";
-		}
-		else
-		{
-			if(buyerName.equals("B&Q plc"))
-			{
-				return "23657440";
-			}
-			else if(buyerName.equals("B&Q Ireland Ltd"))
-			{
-				return "23677719";
-			}
-			else if(buyerName.equals("B&Q (Retail) Jersey Ltd"))
-			{
-				return "23677785";
-			}
-			else if(buyerName.equals("B&Q (Retail) Guernsey Ltd"))
-			{
-				return "23677822";
-			}
-		}
-		return "-1";
-		
-	}
 
 	public static void main(String[] args) {
 		try {
-			ReadBQCSV Co = new ReadBQCSV();
+			ReadArgosCSV Co = new ReadArgosCSV();
 			Co.readCSV();
 			for(Order o: Co.listOfOrders)
 			{
@@ -122,7 +90,7 @@ public class ReadBQCSV {
 			dialog.setAlwaysOnTop(true);
 			dialog.setVisible(true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			JOptionPane optionPane = new JOptionPane();
 			JDialog dialog = optionPane.createDialog("Orders Not Uploaded");
 			optionPane.setMessage("Closing");

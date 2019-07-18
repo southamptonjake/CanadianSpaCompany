@@ -1,3 +1,4 @@
+package shared;
 public class Customer {
 	String email,phone,mobile,firstName,lastName,company,addr1,addr2,city,country,state,zip ;
 
