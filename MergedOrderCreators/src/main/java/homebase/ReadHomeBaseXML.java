@@ -265,11 +265,6 @@ public class ReadHomeBaseXML {
 
 					}
 
-
-
-
-
-
 					if(orderDate.equals("") || orderNum.equals("") || customerOrderNumber.equals(""))
 					{
 						throw new Exception();
@@ -277,7 +272,8 @@ public class ReadHomeBaseXML {
 					JOptionPane.showMessageDialog(null, "Uploading: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);
 					StatusReport s = new StatusReport(orderNum,orderDate,customerOrderNumber);
 					Customer c = new Customer(email, phone, mobile,firstName, lastName, company,addr1,  addr2, city, country,state, zip);
-					Order o = new Order(quantity,sku,price,tax, orderNum, storeRef,  customerOrderNumber,  c);
+					String notes = orderNum + " " + storeRef + " " + customerOrderNumber;
+					Order o = new Order(quantity,sku,price,tax, notes, c,  "12604329",  "46687");
 					o.uploadOrder();
 					countUpload ++;
 					JOptionPane.showMessageDialog(null, "Uploaded: " + firstName, "Uploading", JOptionPane.INFORMATION_MESSAGE);

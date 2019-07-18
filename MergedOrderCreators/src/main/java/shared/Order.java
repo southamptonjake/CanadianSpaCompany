@@ -81,7 +81,7 @@ public class Order {
 				lineItemAttributes +
 				"        ],\r\n" +
 				"\"customer_note_attributes\": {\r\n" +
-				"        \"text\": \""+ notes + "\"\r\n" + 
+				"        \"text\": \"" + customer.email + " " + " notes " + "\"\r\n" + 
 				"      }\r\n" + 
 				"    }\r\n" + 
 				"}");
