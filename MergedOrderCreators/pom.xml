@@ -5,6 +5,10 @@
 	<groupId>MergedOrderCreators</groupId>
 	<artifactId>MergedOrderCreators</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -46,5 +50,101 @@
 			<artifactId>activation</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
+
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.1</version>
+				<executions>
+					<execution>
+						<id>build-argos</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>argos.ReadArgosCSV</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>../bin/ArgosVeeqoCreator</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-bq</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>bandq.readBQCSV</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>../bin/BQVeeqoCreator</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-range</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>range.readRangeCSV</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>../bin/RangeVeeqoCreator</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-homebase</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>homebase.readHomeBaseXML</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>../bin/HomeBaseVeeqoCreator</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-HB1</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>homebase.CreateHB1</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>../bin/CreateHB1</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
 </project>
