@@ -17,9 +17,7 @@ public class APIKEYCreator {
 	public class ApiJson
 	{
 		String veeqoApi;
-		String sendGridApi;
-		String twilioSid;
-		String twilioToken;
+		String postcoderApi;
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException, IOException {
@@ -29,9 +27,12 @@ public class APIKEYCreator {
 		ApiJson data = gson.fromJson(reader, ApiJson.class);
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream("./src/main/java/api/APIKEYS.java"), "utf-8"))) {
-			writer.write("public class APIKEYS {\n" + 
+			writer.write("package api; \n"
+					+ "public class APIKEYS {\n" + 
 					"	\n" + 
 					"	public static String veeqoApi = \""+data.veeqoApi+"\" ;\n" +
+					"	public static String postcoderApi = \""+data.postcoderApi+"\" ;\n" +
+
 					"\n" + 
 					"\n" + 
 					"}");

@@ -188,7 +188,7 @@ public class ReadRangeCSV {
 			Co.readCSV();
 			for(Order o: Co.listOfOrders)
 			{
-				o.uploadOrder();
+				//o.uploadOrder();
 			}
 			JOptionPane optionPane = new JOptionPane();
 			optionPane.setMessage("Closing");
