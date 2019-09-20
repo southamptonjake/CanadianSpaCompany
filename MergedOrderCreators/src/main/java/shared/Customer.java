@@ -21,6 +21,14 @@ public class Customer {
 		super();
 		this.email = email;
 		this.phone = phone;
+		//add 0's at start
+		String firstDigit = phone.substring(0,1);
+		System.out.println(firstDigit);
+		if(!firstDigit.equals("0"))
+		{
+			phone = "0" + phone;
+		}
+		
 		this.mobile = mobile;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -105,11 +113,10 @@ public class Customer {
 		{
 			int reply = JOptionPane.showConfirmDialog(null, createMessageDialog(coder), "Choose Address", JOptionPane.YES_NO_OPTION);
 			if (reply == JOptionPane.YES_OPTION) {
-				JOptionPane.showMessageDialog(null, "HELLO");
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "GOODBYE");
-				System.exit(0);
+				addr1 = coder.addr1();
+				addr2 = coder.dependentlocality;
+				city = coder.posttown;
+				state = coder.county;
 			}
 
 		}
