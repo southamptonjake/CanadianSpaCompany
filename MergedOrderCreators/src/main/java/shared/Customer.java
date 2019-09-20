@@ -20,13 +20,15 @@ public class Customer {
 			String addr1, String addr2, String city, String country,String state, String zip) {
 		super();
 		this.email = email;
-		this.phone = phone;
 		//add 0's at start
 		String firstDigit = phone.substring(0,1);
-		System.out.println(firstDigit);
 		if(!firstDigit.equals("0"))
 		{
-			phone = "0" + phone;
+			this.phone = "0" + phone;
+		}
+		else
+		{
+			this.phone = phone;
 		}
 		
 		this.mobile = mobile;
