@@ -1,2 +1,6 @@
 /.metadata/
 /.recommenders/
+*/environment.json
+*/APIKEYS.java
+*.jar
+*.class
