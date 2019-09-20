@@ -1,5 +1,5 @@
 /target/
 environment.json
-/src/main/java/APIKEYS.java
+/src/main/java/api/APIKEYS.java
 *.jar
 *.class
