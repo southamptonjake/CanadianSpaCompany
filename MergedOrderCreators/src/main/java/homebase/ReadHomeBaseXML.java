@@ -140,8 +140,7 @@ public class ReadHomeBaseXML {
 						city = addressNodes.item(4).getTextContent();
 						state = addressNodes.item(5).getTextContent();
 						zip = addressNodes.item(6).getTextContent();
-						mobile = addressNodes.item(7).getTextContent();
-						phone = addressNodes.item(8).getTextContent();
+						phone = addressNodes.item(7).getTextContent();
 					}
 					if(addressNodes.getLength() == 8)
 					{
@@ -292,6 +291,7 @@ public class ReadHomeBaseXML {
 		System.out.println(reportsToAdd.size());
 		JOptionPane.showMessageDialog(null, "Read " + countRead + " items" + System.lineSeparator() + "Uploaded " + countUpload + " items" , "Finished", JOptionPane.INFORMATION_MESSAGE);
 		StatusReport.createStatusReport(reportsToAdd);
+		System.exit(0);
 
 
 	}
