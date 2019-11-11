@@ -91,7 +91,7 @@ public class ReadBQCSV {
 		}
 		else
 		{
-			if(buyerName.equals("B&Q plc"))
+			if(buyerName.equals("B&Q Limited"))
 			{
 				return "23657440";
 			}
