@@ -41,8 +41,19 @@ public class ReadBQCSV {
                 	String poType = orderDetails[2];
                 	String salesOrderNum = orderDetails[23];
                 	String fullName = orderDetails[14];
-                	String firstName = fullName.split(" ")[1];
-                	String lastName = fullName.split(" ")[2];
+                	String firstName;
+                	String lastName;
+                	if(fullName.split("").length == 3)
+                	{
+                		 firstName = fullName.split(" ")[1];
+                    	 lastName = fullName.split(" ")[2];
+                	}
+                	else
+                	{
+                		 firstName = fullName.split(" ")[0];
+                    	 lastName = fullName.split(" ")[1];
+                	}
+                	
                 	String siteCode = orderDetails[13];	
                 	Customer c = new Customer(orderDetails[21],orderDetails[19],orderDetails[20],firstName,lastName,"",orderDetails[15],"",orderDetails[16],orderDetails[17],"",orderDetails[18]);
                 	ArrayList<String> sku = new ArrayList<String>();
