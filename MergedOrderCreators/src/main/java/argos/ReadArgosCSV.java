@@ -31,9 +31,12 @@ public class ReadArgosCSV {
                 //if new order
                 if(!cOrderNum.equals(orderDetails[0]))
                 {
+                	
+                	String fname = orderDetails[70].split(" ")[0];
+					String lname = orderDetails[70].split(" ")[1];
                 	cOrderNum = orderDetails[0];
                 	System.out.println(orderDetails[38]);
-                	Customer c = new Customer(orderDetails[9],orderDetails[26],orderDetails[38],orderDetails[10],orderDetails[11],orderDetails[12],orderDetails[13],orderDetails[14],orderDetails[21],orderDetails[24],orderDetails[23],orderDetails[20]);
+                	Customer c = new Customer(orderDetails[9],orderDetails[26],orderDetails[38],fname,lname,orderDetails[12],orderDetails[13],orderDetails[14],orderDetails[21],orderDetails[24],orderDetails[23],orderDetails[20]);
                 	ArrayList<String> sku = new ArrayList<String>();
                 	ArrayList<String> quanity = new ArrayList<String>();
                 	ArrayList<String> price = new ArrayList<String>();
